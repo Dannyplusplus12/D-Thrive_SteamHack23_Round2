@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Home{% endblock %}</title>
+    <script src="https://cdn.tiny.cloud/1/g5bovpeaw2i2qp5t9jntmruhowxjhwtqq8fm295gdhzhl0z2/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>
+</head>
+<body>
+    <div style="
+    width: 100%;
+    border: 2px solid black;
+    display: flex;
+    justify-content: space-around;
+    ">
+        {% if user.is_authenticated %}
+        <a href="/">Home</a>
+        <a href="/logout">LogOut</a>
+        {% else %}
+        <a href="/login">Login</a>
+        <a href="/sign-up">SignUp</a>
+        {% endif %}
+    </div>
+
+    {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+    {% endif %}
+        {% for category, message in messages %}
+            {% if category == 'error' %}
+                {{ message }}
+                <button type="button">X</button>
+            {% else %}
+                {{ message }}
+                <button type="button">X</button>
+            {% endif %}
+        {% endfor %}
+    {% endwith %}
+
+    <div>{% block content %}{% endblock %}</div>
+    <script>
+        // function deleteNote(noteId) {
+        //     fetch('/delete-note', {
+        //         method: "POST",
+        //         body: JSON.stringify({ noteId: noteId }),
+        //     }).then((_res) => {
+        //         window.location.href = "/"
+        //     })
+        // }
+
+        tinymce.init({
+            selector: '.post-area'
+        });
+    </script>
+</body>
+</html>

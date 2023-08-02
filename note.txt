@@ -1,0 +1,13 @@
+Chạy file main
+
+Vào /create để post bài
+
+/create có lưu trạng thái bài đang viết lần trước bằng Current_Post bên models
+em để nó lưu được nhiều Current_Post để sau có thể nâng cấp lên kiểu.. lưu nhiều bài chưa hoàn thiện
+
+Em tính qua bên /preview thì có thể quay lại trang edit hoặc post bài luôn, nma chưa code
+
+Nếu render content từ thằng tiny ra html bằng Flask thì phải thêm thằng | safe
+như vở file preview.html thì em có ghi:
+{{ title | safe }}
+{{ content | safe }}

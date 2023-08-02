@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+{% block title %} Create {% endblock %}
+{% block content %}
+{{ title | safe }}
+{{ content | safe }}
+<form action="/create" method="GET">
+    <button type="submit"></button>
+</form>
+<form action="" method="POST">
+    
+</form>
+{% endblock %}
