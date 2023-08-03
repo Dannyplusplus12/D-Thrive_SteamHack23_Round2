@@ -6,6 +6,7 @@ class Post(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String)
     content = db.Column(db.String)
+    tags = db.Column(db.String)
     date = db.Column(db.DateTime(timezone=True), default=func.now())
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
 
@@ -13,7 +14,9 @@ class Current_Post(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String)
     content = db.Column(db.String)
+    tags = db.Column(db.String)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+
 
 class User(db.Model, UserMixin):
     id = db.Column(db.Integer, primary_key=True)

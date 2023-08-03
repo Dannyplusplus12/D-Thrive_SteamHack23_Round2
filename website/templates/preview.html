@@ -3,10 +3,11 @@
 {% block content %}
 {{ title | safe }}
 {{ content | safe }}
+{{ tags | safe }}
 <form action="/create" method="GET">
-    <button type="submit"></button>
+    <button type="submit">Edit</button>
 </form>
-<form action="" method="POST">
-    
+<form action="/blog" method="POST">
+    <button type="submit" name="btn" value="post">Post</button>
 </form>
 {% endblock %}
