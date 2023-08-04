@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+{% block title %} Blog {% endblock %}
+{% block content %}
+<h1>Blogs</h1>
+<!-- <form action="" method="post">
+    <label for="sort-type">Sắp xếp theo</label>
+    <select name="sort-type">
+        <option value="dec">Cũ nhất</option>
+        <option value="inc">Mới nhất</option>
+    </select>
+    <button type="submit">Áp dụng</button>
+</form> -->
+<div>
+    <form action="" method="POST">
+        <label for="search-for">Tìm kiếm theo tags</label>
+        <input type="text" name="search-for"></input>
+        <button type="submit" name="btn" value="search">Tìm</button>
+    </form>
+</div>
+<div>
+    {% for post in posts %}
+    <a href="{{ url_for('blog.view', id=post.id ) }}">
+        <div">
+            <h2> {{ post.title }} </h2>
+            <p> {{ post.tags }}</p>
+            <h4>Đăng bởi: {{ post.author }}, {{ post.date }}</h4>
+            {% if user.role == 'admin' or post.user_id == user.id %}
+            <a href="{{ url_for('blog.edit', id=post['id']) }}">Chỉnh sửa</a>
+            <a href="{{ url_for('blog.delete', id=post.id ) }}">Xoá</a>
+            {% endif %}
+        </div>
+    </a>
+    {% endfor %}
+</div>
+<button><a href="/blog/create">Create blog</a></button>
+<button><a href="/my-blog">My blog</a></button>
+{% endblock %}

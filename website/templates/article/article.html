@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% block title %} Blog {% endblock %}
+{% block content %}
+{% for article in articles %}
+<a href="{{ article.link_to_article }}">    
+    <div>
+        <img src="{{ article.img_url }}" alt="">
+        <p> {{ article.tags }} </p>
+        <h4> {{ article.date }} </h4>
+        <h3> {{ article.title }} </h3>
+    </div>
+</a>
+{% if user.role == 'admin' %}
+<form method="POST">
+    <button type="submit" name="btn" value="edit">Edit</button>
+</form>
+<form method="POST">
+    <button type="submit" name="btn" value="delete">Delete</button>
+</form>
+{% endif %}
+{% endfor %}
+<a href="{{ url_for('article.create') }}">Create</a>
+{% endblock %}

@@ -1,11 +1,11 @@
 {% extends "base.html" %}
 {% block title %} Create {% endblock %}
 {% block content %}
-<h2> {{ title }} </h2>
-{{ content | safe }}
-<p> {{ tags }} </p>
-<h4> Đăng bởi: {{ author }}, 0000-00-00 00:00:00</h4>
-<form action="/create" method="GET">
+<h2> {{ post.title }} </h2>
+{{ post.content | safe }}
+<p> {{ post.tags }} </p>
+<h4> Đăng bởi: {{ post.author }}, 0000-00-00 00:00:00</h4>
+<form action="/blog/create" method="GET">
     <button type="submit">Edit</button>
 </form>
 <form action="" method="POST">

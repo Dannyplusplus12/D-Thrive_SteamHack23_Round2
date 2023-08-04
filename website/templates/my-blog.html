@@ -1,7 +1,7 @@
 {% extends "base.html" %}
-{% block title %} Blog {% endblock %}
+{% block title %} Create {% endblock %}
 {% block content %}
-<h1>Blogs</h1>
+<h1>My blogs</h1>
 <div>
     <!-- <form action="" method="post">
         <label for="sort-type">Sắp xếp theo</label>
@@ -11,19 +11,24 @@
         </select>
         <button type="submit">Áp dụng</button>
     </form> -->
+    <form action="" method="POST">
+        <label for="search-for">Tìm kiếm theo tags</label>
+        <input type="text" name="search-for"></input>
+        <button type="submit" name="btn" value="search">Tìm</button>
+    </form>
     {% for post in posts %}
-    <a href="{{ url_for('views.view', id=post.id ) }}">
+    <a href="{{ url_for('blog.view', id=post.id ) }}">
         <div">
             <h2> {{ post.title }} </h2>
             <p> {{ post.tags }}</p>
             <h4>Đăng bởi: {{ post.author }}, {{ post.date }}</h4>
             {% if user.role == 'admin' or post.user_id == user.id %}
-            <a href="{{ url_for('views.edit', id=post['id']) }}">Chỉnh sửa</a>
-            <a href="{{ url_for('views.delete', id=post.id ) }}">Xoá</a>
+            <a href="{{ url_for('blog.edit', id=post['id']) }}">Chỉnh sửa</a>
+            <a href="{{ url_for('blog.delete', id=post.id ) }}">Xoá</a>
             {% endif %}
         </div>
     </a>
     {% endfor %}
 </div>
-<button><a href="/create">Create blog</a></button>
+<button><a href="/blog/create">Create blog</a></button>
 {% endblock %}

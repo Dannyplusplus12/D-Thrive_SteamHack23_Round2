@@ -14,9 +14,13 @@ def create_app():
 
     from .views import views
     from .auth import auth
+    from .blog import blog
+    from .article import article
 
     app.register_blueprint(views, url_prefix='/')
     app.register_blueprint(auth, url_prefix='/')
+    app.register_blueprint(blog, url_prefix='/')
+    app.register_blueprint(article, url_prefix='/')
 
     from .models import User, Post, Current_Post
 

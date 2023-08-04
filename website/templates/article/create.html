@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% block title %} Blog {% endblock %}
+{% block content %}
+<form action="" method="POST">
+    <label for="link_to_article">Link dẫn tới bài báo</label>
+    <input type="text" name="link_to_article">
+    <label for="img_url">URL hình ảnh</label>
+    <input type="text" name="img_url">
+    <label for="tags">Tags</label>
+    <input type="text" name="tags">
+    <label for="title">Tiêu đề</label>
+    <input type="text" name="title">
+    <button type="submit" name="btn" value="create">Create</button>
+</form>
+{% endblock %}

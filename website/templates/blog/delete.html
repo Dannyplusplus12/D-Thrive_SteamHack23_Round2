@@ -6,8 +6,8 @@
     <a href="/blog">Quay lại</a>
     <button type="submit">Xoá</button>
 </form>
-<h2> {{ title }} </h2>
-{{ content | safe }}
-<p> {{ tags }} </p>
-<h4> Đăng bởi: {{ author }}, {{ date }}</h4>
+<h2> {{ post.title }} </h2>
+{{ post.content | safe }}
+<p> {{ post.tags }} </p>
+<h4> Đăng bởi: {{ post.author }}, {{ post.date }}</h4>
 {% endblock %}

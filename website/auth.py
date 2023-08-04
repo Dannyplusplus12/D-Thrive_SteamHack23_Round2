@@ -23,7 +23,7 @@ def login():
         else:
             flash('Email does not exists', category='error')
 
-    return render_template('login.html', user=current_user)
+    return render_template('auth/login.html', user=current_user)
 
 @auth.route("/logout")
 @login_required
@@ -56,4 +56,4 @@ def sign_up():
             db.session.commit()
             flash('SignIn SUCCESS, LogIn', category='success')
             return redirect(url_for('auth.login'))
-    return render_template('sign-up.html', user=current_user)
+    return render_template('auth/sign-up.html', user=current_user)
