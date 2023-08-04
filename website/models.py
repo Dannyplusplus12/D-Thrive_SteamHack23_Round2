@@ -8,6 +8,7 @@ class Post(db.Model):
     content = db.Column(db.String)
     tags = db.Column(db.String)
     date = db.Column(db.DateTime(timezone=True), default=func.now())
+    author = db.Column(db.String)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
 
 class Current_Post(db.Model):
@@ -20,6 +21,7 @@ class Current_Post(db.Model):
 
 class User(db.Model, UserMixin):
     id = db.Column(db.Integer, primary_key=True)
+    role = db.Column(db.String(30))
     email = db.Column(db.String(150), unique=True)
     password = db.Column(db.String(30))
     user_name = db.Column(db.String(150))

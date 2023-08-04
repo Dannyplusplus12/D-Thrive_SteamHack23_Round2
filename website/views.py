@@ -1,6 +1,7 @@
 from flask import Blueprint, render_template, request, flash, redirect, url_for
 from flask_login import login_required, current_user
-from .models import Post, Current_Post
+from functools import cmp_to_key
+from .models import User, Post, Current_Post
 from . import db
 import json
 
@@ -9,31 +10,23 @@ views = Blueprint('views', __name__)
 @views.route('/', methods=['GET', 'POST'])
 @login_required
 def home():
-
     return render_template('home.html', user=current_user)
 
 @views.route('/blog', methods=['GET', 'POST'])
 @login_required
 def blog():
-    if request.method == 'POST':
-        if request.form['btn'] == 'post':
-            current_post = current_user.current_posts[0]
-            title = current_post.title
-            content = current_post.content
-            tags = current_post.tags
-
-            new_post = Post(title=title, content=content, tags=tags, user_id=current_user.id)
-            db.session.add(new_post)
-            db.session.commit()
-
     # lấy toàn bộ post hiện tại có
     posts = Post.query.all()
-    for post in posts:
-        print(post.content)
 
-    return render_template('blog.html', user=current_user)
+    if request.method == 'POST':
+        type = request.form.get('sort-type')
 
+        if type == 'dec':
+            posts = Post.query.all().sort(key=cmp_to_key(lambda x, y: x.id - y.id))
 
+    print(posts)
+
+    return render_template('blog.html', user=current_user, posts=posts)
 
 @views.route('/create', methods=['GET', 'POST'])
 def create():
@@ -105,5 +98,30 @@ def preview():
     title = current_post.title
     content = current_post.content
     tags = current_post.tags
+    author = current_user.user_name
 
-    return  render_template('preview.html', user=current_user, title=title, content=content, tags=tags)
+    if request.method == 'POST':
+        if request.form['btn'] == 'post':
+            current_post = current_user.current_posts[0]
+            title = current_post.title
+            content = current_post.content
+            tags = current_post.tags
+
+            new_post = Post(title=title, content=content, tags=tags, user_id=current_user.id, author=author)
+            db.session.add(new_post)
+            db.session.commit()
+
+            return redirect(url_for('views.blog'))
+
+    return render_template('preview.html', user=current_user, title=title, content=content, tags=tags, author=author)
+
+@views.route('/<int:id>/view', methods=['GET', 'POST'])
+def view(id):
+    post = Post.query.get(id)
+    id = post.id
+    title = post.title
+    content = post.content
+    tags = post.tags
+    date = post.date
+    author = post.author
+    return render_template('view.html', user=current_user, title=title, content=content, tags=tags, date=date, author=author)
