@@ -34,4 +34,7 @@
 </div>
 <button><a href="/blog/create">Create blog</a></button>
 <button><a href="/my-blog">My blog</a></button>
+{% if user.role == 'admin' %}
+<button><a href="/admin/queue">Đang chờ</a></button>
+{% endif %}
 {% endblock %}

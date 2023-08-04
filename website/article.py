@@ -7,7 +7,7 @@ article = Blueprint('article', __name__)
 
 @article.route('/article', methods=['GET', 'POST'])
 @login_required
-def view():
+def articleView():
     articles = Article.query.all()
     return render_template('article/article.html', user=current_user, articles=articles)
 
@@ -24,7 +24,7 @@ def create():
             db.session.add(new_article)
             db.session.commit()
 
-            return redirect(url_for('article.view'))
+            return redirect(url_for('article.articleView'))
 
     return render_template('article/create.html', user=current_user)
 
@@ -36,13 +36,13 @@ def delete(id):
     if current_user.role == 'admin':
         pass
     else:
-        return redirect(url_for('article.view'))
+        return redirect(url_for('article.articleView'))
 
 
     if request.method == 'POST':
         db.session.delete(current_article)
         db.session.commit()
-        return redirect(url_for('article.view'))
+        return redirect(url_for('article.articleView'))
 
     return render_template("/article/delete.html", user=current_user, article=current_article)
 
@@ -63,6 +63,6 @@ def edit(id):
         current_article.title = request.form.get('title')
         
         db.session.commit()
-        return redirect(url_for('article.view'))
+        return redirect(url_for('article.articleView'))
 
     return render_template("article/edit.html", user=current_user, article=current_article)

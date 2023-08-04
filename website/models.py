@@ -17,8 +17,8 @@ class Current_Post(db.Model):
     title = db.Column(db.String)
     content = db.Column(db.String)
     tags = db.Column(db.String)
+    author = db.Column(db.String(150))
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
-
 
 class User(db.Model, UserMixin):
     id = db.Column(db.Integer, primary_key=True)

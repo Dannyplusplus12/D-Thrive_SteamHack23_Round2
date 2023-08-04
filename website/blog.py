@@ -35,7 +35,8 @@ def create():
             db.session.delete(current_user.current_posts[0])
         except:
             pass
-        current_post = Current_Post(title=title, content=content, tags=tags, user_id=current_user.id)
+
+        current_post = Current_Post(title=title, content=content, tags=tags, user_id=current_user.id, author=current_user.user_name)
         db.session.add(current_post)
         db.session.commit()
 
@@ -102,8 +103,7 @@ def preview():
 
     if request.method == 'POST':
         if request.form['btn'] == 'post':
-
-            new_post = Post(title=post.title, content=post.content, tags=post.tags, user_id=current_user.id, author=current_user.user_name, status="public")
+            new_post = Post(title=post.title, content=post.content, tags=post.tags, user_id=current_user.id, author=current_user.user_name, status="wait")
             db.session.add(new_post)
             db.session.commit()
 
