@@ -5,7 +5,8 @@
     <h2> {{ title }}</h2>
     {{ content | safe }}
     <p> {{ tags }}</p>
-    <h5> by {{ author }} on {{ date }} </h5>
+    <h5> Đăng bởi: {{ author }},  {{ date }} </h5>
 </div>
 <a href=" {{ url_for('views.blog') }} ">Blog</a>
+<a href="{{ url_for('views.delete', id=id ) }}">Xoá</a>
 {% endblock %}

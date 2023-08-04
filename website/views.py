@@ -61,17 +61,21 @@ def create():
 # để xoá một post thì gởi request API với nội dung là id của post muốn xoá
 # em đã tạo sẵn một hàm deletePost ở file base.html
 # khi bấm xoá post thì gọi hàm deletePost và truyền tham số là id của post
-@views.route('/delete-post', methods=['POST'])
-def delete_note():
-    data = json.loads(request.data)
-    postId = data['postId']
-    post = Post.query.get(postId)
-    if post:
-        if post.user_id == current_user.id:
-            db.session.delete(post)
-            db.session.commit()
-    return json.dumps({})
+@views.route('/<int:id>/delete', methods=['GET', 'POST'])
+def delete(id):
+    post = Post.query.get(id)
+    id = post.id
+    title = post.title
+    content = post.content
+    tags = post.tags
+    date = post.date
 
+    if request.method == 'POST':
+        db.session.delete(post)
+        db.session.commit()
+        return redirect(url_for('views.blog'))
+
+    return render_template("delete.html", user=current_user, title=title, content=content, tags=tags, date=date)
 
 # để edit một post thì anh gọi đến hàm này với <int:id> là id của post muốn edit
 # một cách dễ là tạo 1 thẻ a với href="{{ url_for('views.edit', id=post['id']) }}
@@ -124,4 +128,4 @@ def view(id):
     tags = post.tags
     date = post.date
     author = post.author
-    return render_template('view.html', user=current_user, title=title, content=content, tags=tags, date=date, author=author)
+    return render_template('view.html', user=current_user, id=id, title=title, content=content, tags=tags, date=date, author=author)
