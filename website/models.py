@@ -11,6 +11,7 @@ class Post(db.Model):
     author = db.Column(db.String(150))
     status = db.Column(db.String(20))
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+    comments  = db.relationship('Comment')
 
 class Current_Post(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -28,6 +29,7 @@ class User(db.Model, UserMixin):
     user_name = db.Column(db.String(150))
     posts = db.relationship('Post')
     current_posts = db.relationship('Current_Post')
+    comments  = db.relationship('Comment')
 
 class Article(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -36,3 +38,10 @@ class Article(db.Model):
     link_to_article = db.Column(db.String)
     img_url = db.Column(db.String)
     date = db.Column(db.DateTime(timezone=True), default=func.now())
+
+class Comment(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    content = db.Column(db.String)
+    date = db.Column(db.DateTime(timezone=True), default=func.now())
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+    post_id = db.Column(db.Integer, db.ForeignKey('post.id'))

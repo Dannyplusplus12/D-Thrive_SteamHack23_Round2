@@ -7,6 +7,24 @@
     <p> {{ post.tags }}</p>
     <h5> Đăng bởi: {{ post.author }},  {{ post.date }} </h5>
 </div>
+
 <a href=" {{ url_for('blog.blogView') }} ">Blog</a>
 <a href="{{ url_for('blog.delete', id=post.id ) }}">Xoá</a>
+
+<div>
+    <h4>Bình luận</h4>
+    <form action="" method="POST">
+        <textarea name="comment-content" id="" cols="30" rows="10"></textarea>
+        <button type="submit" name="btn" value="comment">Đăng</button>
+    </form>
+    <div>
+        {% for comment in comment_list %}
+        <div>
+            <h5>{{ comment['user_name'] }}</h5>
+            <p> {{ comment['content'] }} </p>
+            <a href="{{ url_for('blog.deleteComment', id=comment['id'], post_id=post.id ) }}">Xoá</a>
+        </div>
+        {% endfor %}
+    </div>
+</div>
 {% endblock %}

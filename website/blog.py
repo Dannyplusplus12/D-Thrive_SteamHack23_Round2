@@ -1,6 +1,6 @@
 from flask import Blueprint, render_template, request, flash, redirect, url_for
 from flask_login import login_required, current_user
-from .models import User, Post, Current_Post, Article
+from .models import User, Post, Current_Post, Comment
 from . import db
 
 blog = Blueprint('blog', __name__)
@@ -11,10 +11,7 @@ def blogView():
     posts = Post.query.filter_by(status='public')
 
     if request.method == 'POST':
-    #     type = request.form.get('sort-type')
 
-    #     if type == 'dec':
-    #         posts = Post.query.all().sort(key=cmp_to_key(lambda x, y: x.id - y.id))
         if request.form['btn'] == 'search':
             text = request.form.get('search-for')
             posts = Post.query.filter(Post.tags.contains(text))
@@ -29,8 +26,6 @@ def create():
         content = request.form.get('content')
         tags = request.form.get('tags')
 
-        #mỗi lần preview thì cập nhật lại current_posts[0]
-        #em để one-many, tức lưu nhiều current_posts để sau có thể nâng cấp lên kiểu.. lưu nhiều bài chưa hoàn thiện
         try:
             db.session.delete(current_user.current_posts[0])
         except:
@@ -49,9 +44,6 @@ def create():
 
     return render_template('blog/create.html', user=current_user, post=current_post)
 
-# để xoá một post thì gởi request API với nội dung là id của post muốn xoá
-# em đã tạo sẵn một hàm deletePost ở file base.html
-# khi bấm xoá post thì gọi hàm deletePost và truyền tham số là id của post
 @blog.route('/blog/<int:id>/delete', methods=['GET', 'POST'])
 @login_required
 def delete(id):
@@ -69,8 +61,6 @@ def delete(id):
 
     return render_template("blog/delete.html", user=current_user, post=post)
 
-# để edit một post thì anh gọi đến hàm này với <int:id> là id của post muốn edit
-# một cách dễ là tạo 1 thẻ a với href="{{ url_for('views.edit', id=post['id']) }}
 @blog.route('/blog/<int:id>/edit', methods=['GET', 'POST'])
 @login_required
 def edit(id):
@@ -115,5 +105,28 @@ def preview():
 @login_required
 def view(id):
     post = Post.query.get(id)
+    if request.method == 'POST':
+        if request.form['btn'] == 'comment':
+            new_comment = Comment(content=request.form['comment-content'], user_id=current_user.id, post_id=id)
+            db.session.add(new_comment)
+            db.session.commit()
 
-    return render_template('blog/view.html', user=current_user, post=post)
+    list = []
+    for comment in post.comments:
+        list.append({'user_name': User.query.get(comment.user_id).user_name, 'content': comment.content, 'id': comment.id})
+
+    return render_template('blog/view.html', user=current_user, post=post, comment_list=list)
+
+@blog.route('/blog/<int:id>/<int:post_id>/delete-comment', methods=['GET', 'POST'])
+@login_required
+def deleteComment(id, post_id):
+    comment = Comment.query.get(id)
+
+    if current_user.role == 'admin' or comment.user_id == current_user.id:
+        pass
+    else:
+        return redirect(url_for('views.home'))
+    
+    db.session.delete(comment)
+    db.session.commit()
+    return redirect(url_for('blog.view', id=post_id))
