@@ -1,6 +1,15 @@
 Cài các thư viện:
+
+
+
 pip install Flask
+
+
+
 pip install Flask-Login
+
+
+
 pip install Flask-SQLAlchemy
 
 
