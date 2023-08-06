@@ -37,5 +37,7 @@
     {% endif %}
 </div>
 {% endfor %}
+{% if user.role == 'admin' %}
 <button class="primary-btn"><a href="{{ url_for('article.create') }}">Tạo Article</a></button>
+{% endif %}
 {% endblock %}
