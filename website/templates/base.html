@@ -8,40 +8,57 @@
     <script src="https://cdn.tiny.cloud/1/g5bovpeaw2i2qp5t9jntmruhowxjhwtqq8fm295gdhzhl0z2/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>
 
 <body>
-    <header class="header">
-        <div class="logo"><span class="material-symbols-sharp">eco</span></div>
-        <nav class="nav">
-        {% if user.is_authenticated %}
-        <a href="/">Home</a>
-        <a href="/blog">Blog</a>
-        <a href="/article">Article</a>
-        <a href="/about">About Us</a>
-        <a href="/contact">Contact</a>
-        <button type="submit" class="Login-button"><a class="word" href="/logout">Logout</a></button>
-        {% else %}
-        <a href="/login">Login</a>
-        <a href="/sign-up">SignUp</a>
-        {% endif %}
-        </nav>
+    <div id="background-img"></div>
+    <header id="header" style="background-color: #338d8e;">
+        <div style="width: 100%; display: flex; flex-direction: row; justify-content: space-between; margin: 0 78px">
+            <div class="logo" style="display: flex; align-items: center; scale: 250%; color: white;"><span class="material-symbols-sharp">eco</span></div>
+            <nav id="nav">
+                {% if user.is_authenticated %}
+                <a href="/">Home</a>
+                <a href="/blog">Blog</a>
+                <a href="/article">Article</a>
+                <a href="/about">About Us</a>
+                <a href="/contact">Contact</a>
+                <button type="submit" class="auth-button"><a href="/logout">Logout</a></button>
+                {% else %}
+                <a href="/login">Login</a>
+                <a href="/sign-up">SignUp</a>
+                {% endif %}
+            </nav>
+        </div>
     </header>
 
-    {% with messages = get_flashed_messages(with_categories=true) %}
+    <!-- {% with messages = get_flashed_messages(with_categories=true) %}
     {% if messages %}
-    {% endif %}
         {% for category, message in messages %}
             {% if category == 'error' %}
-                {{ message }}
-                <button type="button">X</button>
+            {{ message }}
+            <button type="button">X</button>
             {% else %}
-                {{ message }}
-                <button type="button">X</button>
+            {{ message }}
+            <button type="button">X</button>
             {% endif %}
         {% endfor %}
-    {% endwith %}
+    {% endif %}
+    {% endwith %} -->
 
-    <div>{% block content %}{% endblock %}</div>
+    <div>
+        <div style="margin: 32px 78px; padding: 32px; background-color: rgba(0, 0, 0, 0.4); border-radius: 16px;">
+            {% block content %}{% endblock %}
+        </div>
+    </div>
     <script>
-        // gởi một request API với /delete-note với nội dung là id của post muốn xoá
+        // document.addEventListener("scroll", (event) => {
+        //     let scroll = this.scrollY;
+        //     if(scroll < 50) {
+        //         document.getElementById('header').style.backgroundColor = 'red'
+        //     }
+        //     else {
+        //         document.getElementById('header').style.backgroundColor = 'transparent'
+        //     }
+        // });
+
+
         function deletePost(postId) {
             fetch('/delete-note', {
                 method: "POST",

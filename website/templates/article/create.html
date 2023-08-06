@@ -2,14 +2,18 @@
 {% block title %} Blog {% endblock %}
 {% block content %}
 <form action="" method="POST">
-    <label for="link_to_article">Link dẫn tới bài báo</label>
-    <input type="text" name="link_to_article">
-    <label for="img_url">URL hình ảnh</label>
-    <input type="text" name="img_url">
-    <label for="tags">Tags</label>
-    <input type="text" name="tags">
-    <label for="title">Tiêu đề</label>
-    <input type="text" name="title">
-    <button type="submit" name="btn" value="create">Create</button>
+    <div style="display: flex; flex-direction: column;">
+        <label style="font-size: 1.4rem; margin-bottom: 8px;" for="link_to_article">Link dẫn tới bài báo:</label>
+        <input class="primary-input" style="margin-bottom: 16px;" type="text" name="link_to_article">
+        <label style="font-size: 1.4rem; margin-bottom: 8px;" for="img_url">URL hình ảnh:</label>
+        <input class="primary-input" style="margin-bottom: 16px;" type="text" name="img_url">
+        <label style="font-size: 1.4rem; margin-bottom: 8px;" for="tags">Tags:</label>
+        <input class="primary-input" style="margin-bottom: 16px;" type="text" name="tags">
+        <label style="font-size: 1.4rem; margin-bottom: 8px;" for="title">Tiêu đề:</label>
+        <input class="primary-input" style="margin-bottom: 16px;" type="text" name="title">
+        <div style="display: flex; justify-content: flex-end; margin-top: 32px;">
+            <button class="primary-btn" type="submit" name="btn" value="create">Tạo</button>
+        </div>
+    </div>
 </form>
 {% endblock %}
