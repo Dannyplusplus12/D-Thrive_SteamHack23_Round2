@@ -9,7 +9,6 @@ blog = Blueprint('blog', __name__)
 @login_required
 def blogView():
     posts = Post.query.filter_by(status='public')
-
     if request.method == 'POST':
 
         if request.form['btn'] == 'search':

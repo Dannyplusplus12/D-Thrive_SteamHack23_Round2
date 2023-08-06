@@ -21,3 +21,15 @@ def myBlog():
             posts = Post.query.filter(Post.tags.contains(text))
 
     return render_template('my-blog.html', user=current_user, posts=posts)
+
+@views.route('/about', methods=['GET', 'POST'])
+@login_required
+def about():
+
+    return render_template('about.html', user=current_user)
+
+@views.route('/contact', methods=['GET', 'POST'])
+@login_required
+def contact():
+
+    return redirect(url_for('views.home'))

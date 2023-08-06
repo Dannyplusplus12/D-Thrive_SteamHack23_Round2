@@ -1,34 +1,40 @@
 {% extends "base.html" %}
-{% block title %} Create {% endblock %}
+{% block title %} Blog của tôi {% endblock %}
 {% block content %}
-<h1>My blogs</h1>
+<h1>Blog của tôi</h1>
 <div>
-    <!-- <form action="" method="post">
-        <label for="sort-type">Sắp xếp theo</label>
-        <select name="sort-type">
-            <option value="dec">Cũ nhất</option>
-            <option value="inc">Mới nhất</option>
-        </select>
-        <button type="submit">Áp dụng</button>
-    </form> -->
     <form action="" method="POST">
-        <label for="search-for">Tìm kiếm theo tags</label>
-        <input type="text" name="search-for"></input>
-        <button type="submit" name="btn" value="search">Tìm</button>
-    </form>
-    {% for post in posts %}
-    <a href="{{ url_for('blog.view', id=post.id ) }}">
-        <div">
-            <h2> {{ post.title }} </h2>
-            <p> {{ post.tags }}</p>
-            <h4>Đăng bởi: {{ post.author }}, {{ post.date }}</h4>
-            {% if user.role == 'admin' or post.user_id == user.id %}
-            <a href="{{ url_for('blog.edit', id=post['id']) }}">Chỉnh sửa</a>
-            <a href="{{ url_for('blog.delete', id=post.id ) }}">Xoá</a>
-            {% endif %}
+        <div style="display: flex; justify-content: space-between; align-items: center;">
+            <label for="search-for" style="font-size: 1.6rem; line-height: 2.4rem;">Tìm kiếm theo tags:</label>
+            <div>
+                <input style="width: 480px;
+                height: 78%;" class="primary-input" type="text" name="search-for"></input>
+                <button style="width: 120px; height: 78%;" class="primary-btn" type="submit" name="btn" value="search">Tìm</button>
+            </div>
         </div>
-    </a>
+    </form>
+</div>
+<span style="margin-top: 12px; display: block; width: 100%; height: 4px; border-radius: 4px; background-color: rgba(255, 255, 255, 0.2);" ></span>
+<div style="margin-top: 24px;">
+    {% for post in posts %}
+    <div style="margin-top: 12px;">
+        <a href="{{ url_for('blog.view', id=post.id ) }}">
+            <div class="post">
+                <h2> {{ post.title }} </h2>
+                <p> {{ post.tags }}</p>
+                <h4>Đăng bởi: {{ post.author }}, {{ post.date }}</h4>
+                {% if user.role == 'admin' or post.user_id == user.id %}
+                <div>
+                    <a href="{{ url_for('blog.edit', id=post['id']) }}">Chỉnh sửa</a>
+                    <a href="{{ url_for('blog.delete', id=post.id ) }}">Xoá</a>
+                </div>
+                {% endif %}
+            </div>
+        </a>
+    </div>
     {% endfor %}
 </div>
-<button><a href="/blog/create">Create blog</a></button>
+<div style="margin-top: 32px;">
+    <button class="primary-btn"><a href="/blog/create">Tạo blog</a></button>
+</div>
 {% endblock %}

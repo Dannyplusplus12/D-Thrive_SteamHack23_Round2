@@ -1,14 +1,34 @@
 {% extends "base.html" %}
-{% block title %} Create {% endblock %}
+{% block title %} Xem trước {% endblock %}
 {% block content %}
-<h2> {{ post.title }} </h2>
-{{ post.content | safe }}
-<p> {{ post.tags }} </p>
-<h4> Đăng bởi: {{ post.author }}, 0000-00-00 00:00:00</h4>
-<form action="/blog/create" method="GET">
-    <button type="submit">Edit</button>
-</form>
-<form action="" method="POST">
-    <button type="submit" name="btn" value="post">Post</button>
-</form>
+<div class="view">
+    <h2 style="font-size: 2.8rem;
+    letter-spacing: 8px;
+    text-transform: uppercase;
+    margin-bottom: 8px;"> {{ post.title }}</h2>
+    <p style="text-decoration: underline;
+    font-size: 1.5rem;
+    font-style: italic;
+    margin-bottom: 4px;
+    letter-spacing: 2px;"> {{ post.tags }}</p>
+    <h5 style="font-size: 1rem;
+    letter-spacing: 1px;"> Đăng bởi: {{ post.author }},  0000-00-00 00:00:00 </h5>
+    <span style="margin-top: 12px; margin-bottom: 20px; display: block; width: 100%; height: 4px; border-radius: 4px; background-color: rgba(255, 255, 255, 0.2);" ></span>
+    
+    <div>
+        {{ post.content | safe }}
+    </div>
+
+    <span style="margin-top: 12px; margin-bottom: 20px; display: block; width: 100%; height: 4px; border-radius: 4px; background-color: rgba(255, 255, 255, 0.2);" ></span>
+
+</div>
+
+<div style="display: flex; flex-direction: row; justify-content: flex-end;">
+    <form action="/blog/create" method="GET">
+        <button style="margin-right: 8px;" class="primary-btn" type="submit">Chỉnh sửa</button>
+    </form>
+    <form action="" method="POST">
+        <button class="primary-btn" type="submit" name="btn" value="post">Đăng</button>
+    </form>
+</div>
 {% endblock %}

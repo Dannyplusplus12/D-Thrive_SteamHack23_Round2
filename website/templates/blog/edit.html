@@ -1,18 +1,44 @@
 {% extends "base.html" %}
-{% block title %} Create {% endblock %}
+{% block title %} Chỉnh sửa {% endblock %}
 {% block content %}
 <form action="" method='POST'>
-    <input type="text" name="title" value="{{ post.title }}">
-    <textarea class="post-area" name="content">{{ post.content }}</textarea>
-    <input type="text" name="tags" value="{{ post.tags }}">
-    <label>
-        {% if status %}
-        <input type="checkbox" checked name="check-status">
-        {% else %}
-        <input type="checkbox" name="check-status">
-        {% endif %}
-        <span></span>
-      </label>
-    <button type="submit">Submit</button>
+    <!-- <div class="edit">
+      <input type="text" name="title" value="{{ post.title }}">
+      <textarea class="post-area" name="content">{{ post.content }}</textarea>
+      <input type="text" name="tags" value="{{ post.tags }}">
+      <label>
+          {% if status %}
+          <input type="checkbox" checked name="check-status">
+          {% else %}
+          <input type="checkbox" name="check-status">
+          {% endif %}
+          <span></span>
+        </label>
+      <button type="submit">Submit</button>
+    </div> -->
+
+    <div style="display: flex; flex-direction: column;">
+      <label style="margin-bottom: 6px;" for="title">Nhập tiêu đề:</label>
+      <input style="margin-bottom: 26px;" class="primary-input" type="text" id="title" name="title" value="{{ post.title }}">
+      <label style="margin-bottom: 6px;" for="content">Nhập nội dung:</label>
+      <textarea class="post-area" id="content" name="content">{{ post.content }}</textarea>
+      <label style="margin-bottom: 6px; margin-top: 26px;" for="tags">Nhập tags:</label>
+      <input style="margin-bottom: 26px;" class="primary-input" type="text" id="tags" name="tags" value="{{ post.tags }}">
+      <div style="display: flex;
+      margin-top: 28px;
+      justify-content: flex-end;
+      align-items: center;">
+      <h5 style="font-size: 1.2rem; font-weight: 500;" >Công khai:</h5>
+          <label class="container">
+            {% if status %}
+            <input type="checkbox" checked name="check-status">
+            {% else %}
+            <input type="checkbox" name="check-status">
+            {% endif %}
+            <span class="checkmark"></span>
+          </label>
+          <button class="primary-btn" type="submit">Xác nhận</button>
+      </div>
+  </div>
 </form>
 {% endblock %}

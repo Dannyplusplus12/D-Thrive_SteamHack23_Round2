@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {% block title %} Blog {% endblock %}
 {% block content %}
-<h1>Blogs</h1>
+<h1>Blog</h1>
 <div>
     <form action="" method="POST">
         <div style="display: flex; justify-content: space-between; align-items: center;">
@@ -18,19 +18,23 @@
 <div style="margin-top: 24px;">
     {% for post in posts %}
     <div style="margin-top: 12px;">
-        <a href="{{ url_for('blog.view', id=post.id ) }}">
-            <div class="post">
+        <div class="post">
+            <a href="{{ url_for('blog.view', id=post.id ) }}">
                 <h2> {{ post.title }} </h2>
                 <p> {{ post.tags }}</p>
                 <h4>Đăng bởi: {{ post.author }}, {{ post.date }}</h4>
-                {% if user.role == 'admin' or post.user_id == user.id %}
-                <div>
-                    <a href="{{ url_for('blog.edit', id=post['id']) }}">Chỉnh sửa</a>
-                    <a href="{{ url_for('blog.delete', id=post.id ) }}">Xoá</a>
-                </div>
-                {% endif %}
+            </a>
+            {% if user.role == 'admin' or post.user_id == user.id %}
+            <div>
+                <button class="primary-btn">
+                    <a style="margin: 0; text-decoration: none; letter-spacing: 1px; font-size: 1.2rem;" href="{{ url_for('blog.edit', id=post['id']) }}">Chỉnh sửa</a>
+                </button>
+                <button class="primary-btn">
+                    <a style="margin: 0; text-decoration: none; letter-spacing: 1px; font-size: 1.2rem;" href="{{ url_for('blog.delete', id=post.id ) }}">Xoá</a>
+                </button>
             </div>
-        </a>
+            {% endif %}
+        </div>
     </div>
     {% endfor %}
 </div>

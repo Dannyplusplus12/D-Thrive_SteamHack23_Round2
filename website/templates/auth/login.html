@@ -1,26 +1,103 @@
-{% extends "base.html" %}
-{% block title %} LogIn {% endblock %}
-{% block content %}
-<form method="POST">
-    <h3>LogIn</h3>
+<!DOCTYPE html>
+<html lang="en">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Home{% endblock %}</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='base.css') }}">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Sharp:opsz,wght,FILL,GRAD@48,700,1,0" />
+    <script src="https://cdn.tiny.cloud/1/g5bovpeaw2i2qp5t9jntmruhowxjhwtqq8fm295gdhzhl0z2/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>
+
+<body>
+    <div id="background-img"></div>
+    <header id="header" style="background-color: #338d8e;">
+        <div style="width: 100%; display: flex; flex-direction: row; justify-content: space-between; margin: 0 78px">
+            <div class="logo" style="display: flex; align-items: center; scale: 250%; color: white;"><span class="material-symbols-sharp">eco</span></div>
+            <nav id="nav">
+                {% if user.is_authenticated %}
+                <a href="/">Home</a>
+                <a href="/blog">Blog</a>
+                <a href="/article">Article</a>
+                <a href="/about">About Us</a>
+                <a href="/contact">Contact</a>
+                <button type="submit" class="auth-button"><a href="/logout">Logout</a></button>
+                {% else %}
+                <a href="/login">Login</a>
+                <a href="/sign-up">SignUp</a>
+                {% endif %}
+            </nav>
+        </div>
+    </header>
+
+    <!-- {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+        {% for category, message in messages %}
+            {% if category == 'error' %}
+            {{ message }}
+            <button type="button">X</button>
+            {% else %}
+            {{ message }}
+            <button type="button">X</button>
+            {% endif %}
+        {% endfor %}
+    {% endif %}
+    {% endwith %} -->
+
     <div>
-        <label for="email">Email Address</label>
-        <input
-          type="email"
-          name="email"
-          id="email"
-          placeholder="Enter email"
-        />
+
+      <div style="margin-top: 24px;" class="wrapper2">
+        <a href="/"><span class="close"><span class="material-symbols-sharp">close</span></span></a>
+        <div class="authbox">
+          <br>
+              <form method="POST">
+                <div class="loginbox">
+                  <h2>Login</h2>
+                  <br>
+                      <div class="input">
+                          <span class="icon"><span class="material-symbols-sharp">person</span></span>
+                          <input type="email" name="email" id="email" required>
+                          <label>Email</label>
+                      </div>
+                      <br>
+                      <div class="input">
+                          <span class="icon"><span class="material-symbols-sharp">vpn_key</span></span>
+                          <input type="password" name="password" id="password" required>
+                          <label>Password</label>
+                      </div>
+                      <br>
+                      <button type="submit" class="Login">Login</button>
+                      <div class="register">
+                          <p>Don't have an account? <a href="/sign-up" class="register-link">Register</a></p>
+                      </div>
+              </div>
+              </form>
+        </div>
+      </div>
+
     </div>
-    <div>
-        <label for="password">Enter Password</label>
-        <input
-          type="password"
-          name="password"
-          id="password"
-          placeholder="Enter Password"
-        />
-    </div>
-    <button type="submit">LogIn</button>
-</form>
-{% endblock %}
+    <script>
+        // document.addEventListener("scroll", (event) => {
+        //     let scroll = this.scrollY;
+        //     if(scroll < 50) {
+        //         document.getElementById('header').style.backgroundColor = 'red'
+        //     }
+        //     else {
+        //         document.getElementById('header').style.backgroundColor = 'transparent'
+        //     }
+        // });
+
+
+        function deletePost(postId) {
+            fetch('/delete-note', {
+                method: "POST",
+                body: JSON.stringify({ postId: postId }),
+            }).then((_res) => {
+                window.location.href = "/blog"
+            })
+        }
+
+        tinymce.init({
+            selector: '.post-area'
+        });
+    </script>
+</body>
+</html>

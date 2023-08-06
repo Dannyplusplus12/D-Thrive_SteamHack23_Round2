@@ -9,7 +9,17 @@ article = Blueprint('article', __name__)
 @login_required
 def articleView():
     articles = Article.query.all()
-    return render_template('article/article.html', user=current_user, articles=articles)
+    list = []
+    n = len(articles)
+    for i in range(0, n, 2):
+        pair = {'article1': [], 'article2': []}
+        if i+1 < n:
+            pair['article1'] = [articles[i].link_to_article, articles[i].img_url,articles[i].tags,articles[i].date,articles[i].title,articles[i].id]
+            pair['article2'] = [articles[i+1].link_to_article, articles[i+1].img_url,articles[i+1].tags,articles[i+1].date,articles[i+1].title,articles[i+1].id]
+            list.append(pair)
+        else:
+            list.append({'article1': [articles[i].link_to_article, articles[i].img_url,articles[i].tags,articles[i].date,articles[i].title,articles[i].id]})
+    return render_template('article/article.html', user=current_user, list=list)
 
 @article.route('/article/create', methods=['GET', 'POST'])
 @login_required
@@ -38,13 +48,9 @@ def delete(id):
     else:
         return redirect(url_for('article.articleView'))
 
-
-    if request.method == 'POST':
-        db.session.delete(current_article)
-        db.session.commit()
-        return redirect(url_for('article.articleView'))
-
-    return render_template("/article/delete.html", user=current_user, article=current_article)
+    db.session.delete(current_article)
+    db.session.commit()
+    return redirect(url_for('article.articleView'))
 
 @article.route('/article/<int:id>/edit', methods=['GET', 'POST'])
 @login_required

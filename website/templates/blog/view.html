@@ -15,6 +15,7 @@
     margin-bottom: 8px;"> {{ post.title }}</h2>
     <p style="text-decoration: underline;
     font-size: 1.5rem;
+    font-style: italic;
     margin-bottom: 4px;
     letter-spacing: 2px;"> {{ post.tags }}</p>
     <h5 style="font-size: 1rem;
@@ -52,7 +53,7 @@
         {% for comment in comment_list %}
         <div style="margin-bottom: 4px;">
             <h5 style="font-size: 1.2rem;">{{ comment['user_name'] }}</h5>
-            <p> {{ comment['content'] }} </p>
+            <p style="margin-top: 4px; font-size: 1.6rem; letter-spacing: 2px;"> {{ comment['content'] }} </p>
             <div style="display: flex; justify-content: flex-end;"><a style="letter-spacing: 4px;
                 text-decoration: none;
                 color: white;" href="{{ url_for('blog.deleteComment', id=comment['id'], post_id=post.id ) }}">Xoá</a></div>

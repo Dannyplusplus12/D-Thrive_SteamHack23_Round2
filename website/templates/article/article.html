@@ -1,23 +1,41 @@
 {% extends "base.html" %}
-{% block title %} Blog {% endblock %}
+{% block title %} Article {% endblock %}
 {% block content %}
-{% for article in articles %}
-<a href="{{ article.link_to_article }}">    
-    <div>
-        <img src="{{ article.img_url }}" alt="">
-        <p> {{ article.tags }} </p>
-        <h4> {{ article.date }} </h4>
-        <h3> {{ article.title }} </h3>
+{% for pair in list %}
+<div style="display: flex; flex-direction: row; justify-content: space-around; margin-bottom: 32px;" >
+    <div class="article">
+        <a href="{{ pair.article1[0] }}">    
+            <div>
+                <img src="{{ pair.article1[1] }}" alt="">
+                <p> {{ pair.article1[2] }} </p>
+                <h4> {{ pair.article1[3] }} </h4>
+                <h3> {{ pair.article1[4] }} </h3>
+            </div>
+        </a>
+        {% if user.role == 'admin' %}
+        <div class="btns">
+            <button class="primary-btn" type="submit" name="btn" value="delete"><a href="{{ url_for('article.delete', id=pair.article1[5] ) }}">Xoá</a></button>
+        </div>
+        {% endif %}
     </div>
-</a>
-{% if user.role == 'admin' %}
-<form method="POST">
-    <button type="submit" name="btn" value="edit">Edit</button>
-</form>
-<form method="POST">
-    <button type="submit" name="btn" value="delete">Delete</button>
-</form>
-{% endif %}
+    {% if pair.article2 %}
+    <div class="article">
+        <a href="{{ pair.article2[0] }}" >    
+            <div>
+                <img src="{{ pair.article2[1] }}" alt="">
+                <p> {{ pair.article2[2] }} </p>
+                <h4> {{ pair.article2[3] }} </h4>
+                <h3> {{ pair.article2[4] }} </h3>
+            </div>
+        </a>
+        {% if user.role == 'admin' %}
+        <div class="btns">
+            <button class="primary-btn" type="submit" name="btn" value="delete"><a href="{{ url_for('article.delete', id=pair.article2[5] ) }}">Xoá</a></button>
+        </div>
+        {% endif %}
+    </div>
+    {% endif %}
+</div>
 {% endfor %}
-<button class="primary-btn"><a href="{{ url_for('article.create') }}">Create</a></button>
+<button class="primary-btn"><a href="{{ url_for('article.create') }}">Tạo Article</a></button>
 {% endblock %}
