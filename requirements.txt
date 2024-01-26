@@ -4,7 +4,7 @@ flask_login
 os 
 werkzeug
 sqlalchemy
-﻿asgiref==3.7.2
+asgiref==3.7.2
 asyncio==3.4.3
 blinker==1.7.0
 certifi==2023.11.17
